@@ -1,0 +1,33 @@
+{
+	"$schema": "https://orgsdk.ai/schemas/plugin-manifest.v1.json",
+	"name": "google-tasks",
+	"version": "1.0.2",
+	"description": "Google Tasks (sensitive scope). Shares the `google-oauth` credential with google-sheets — connect once via the google-sheets plugin's 'Connect Google' button.",
+	"entry": "index.ts",
+	"auth": {
+		"type": "oauth2",
+		"provider": "google-oauth",
+		"label": "Google (shared — connect via google-sheets)",
+		"hint": "No separate connect step: connect the google-sheets plugin once (one-click or BYO) and the shared google-oauth credential covers Tasks too.",
+		"scopes": ["https://www.googleapis.com/auth/tasks"]
+	},
+	"marketplace": {
+		"group": "google",
+		"displayName": "Google Tasks",
+		"category": "Productivity",
+		"tagline": "Create, update, and complete Google Tasks from agent workflows — turned into a durable task list your agents keep current.",
+		"tags": ["tasks", "google", "productivity"],
+		"useCases": [
+			"Create tasks from emails, issues, or agent observations",
+			"Mark tasks complete and clear finished items on a schedule",
+			"Sync a task list to a sheet or report",
+			"Track follow-ups with due dates and notes"
+		],
+		"permissionsSummary": "Read, create, update, complete, and delete Google Tasks and task lists via OAuth. Reads are safe; creates, updates, and deletes are mutating.",
+		"links": {
+			"homepage": "https://support.google.com/tasks",
+			"docs": "https://developers.google.com/tasks/reference/rest",
+			"sourceRepo": "https://github.com/OrgSDK/orgsdk-plugin-google-tasks"
+		}
+	}
+}
