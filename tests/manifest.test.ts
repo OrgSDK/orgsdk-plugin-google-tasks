@@ -62,6 +62,17 @@ describe("manifest", () => {
 		expect(auth.callbackPath).toBeUndefined();
 	});
 
+	// google-tasks must NOT declare its own setupGuide. The connection guide
+	// is owned by google-sheets (the connect owner). A second guide here would
+	// duplicate the Google Cloud checklist and request a second OAuth client,
+	// contradicting the shared-credential contract. Users who need BYO connect
+	// via google-sheets.
+	it("does NOT declare a setupGuide (owned by google-sheets)", async () => {
+		const m = await readManifest();
+		const auth = m.auth as Record<string, unknown>;
+		expect(auth.setupGuide).toBeUndefined();
+	});
+
 	it("declares marketplace metadata with the source-repo provenance link", async () => {
 		const m = await readManifest();
 		const mp = m.marketplace as Record<string, unknown>;
