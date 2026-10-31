@@ -1,3 +1,13 @@
+# Current execution contract
+
+Connect a BYO Google OAuth app granting the Tasks scope in OrgSDK. The host refreshes it and supplies only its access token. No first-party relay or plugin-owned connect flow is supported by the current host.
+
+Native OAuth providers receive only `{source: "byo", secret_accessToken}`. The host owns refresh. The first-party relay is retired.
+
+## Historical source reference
+
+The following describes the former author-source host; current npm and native credential behaviour above takes precedence.
+
 # Google Tasks
 
 Read and manage Google Tasks — task lists and tasks. Shares the

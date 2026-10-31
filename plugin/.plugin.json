@@ -1,21 +1,21 @@
 {
 	"$schema": "https://orgsdk.ai/schemas/plugin-manifest.v1.json",
 	"name": "google-tasks",
-	"version": "1.0.2",
-	"description": "Google Tasks (sensitive scope). Shares the `google-oauth` credential with google-sheets — connect once via the google-sheets plugin's 'Connect Google' button.",
+	"version": "1.0.3",
+	"description": "Google Tasks (sensitive scope). Shares the `google-oauth` credential with google-sheets \u2014 connect once via the google-sheets plugin's 'Connect Google' button.",
 	"entry": "index.ts",
 	"auth": {
 		"type": "oauth2",
 		"provider": "google-oauth",
-		"label": "Google (shared — connect via google-sheets)",
-		"hint": "No separate connect step: connect the google-sheets plugin once (one-click or BYO) and the shared google-oauth credential covers Tasks too.",
+		"label": "Google (shared \u2014 connect via google-sheets)",
+		"hint": "Connect your own Google OAuth application in OrgSDK. The host refreshes tokens; plugins receive only a run-scoped access token.",
 		"scopes": ["https://www.googleapis.com/auth/tasks"]
 	},
 	"marketplace": {
 		"group": "google",
 		"displayName": "Google Tasks",
 		"category": "Productivity",
-		"tagline": "Create, update, and complete Google Tasks from agent workflows — turned into a durable task list your agents keep current.",
+		"tagline": "Create, update, and complete Google Tasks from agent workflows \u2014 turned into a durable task list your agents keep current.",
 		"tags": ["tasks", "google", "productivity"],
 		"useCases": [
 			"Create tasks from emails, issues, or agent observations",
