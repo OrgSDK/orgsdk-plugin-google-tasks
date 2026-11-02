@@ -118,8 +118,8 @@ async function stagePluginBundle(): Promise<StagedBundle> {
 			{
 				private: true,
 				dependencies: {
-					"@googleapis/tasks": "^12.0.0",
-					"google-auth-library": "^10.6.2",
+					"@googleapis/tasks": "17.1.0",
+					"google-auth-library": "11.3.2",
 				},
 			},
 			null,

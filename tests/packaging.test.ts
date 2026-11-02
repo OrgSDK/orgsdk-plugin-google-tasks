@@ -80,8 +80,8 @@ describe("packaging", () => {
 		// Both Google packages ARE runtime dependencies.
 		const deps = pkg.dependencies as Record<string, string> | undefined;
 		expect(deps).toBeDefined();
-		expect(deps?.["@googleapis/tasks"]).toBe("^12.0.0");
-		expect(deps?.["google-auth-library"]).toBe("^10.6.2");
+		expect(deps?.["@googleapis/tasks"]).toBe("17.1.0");
+		expect(deps?.["google-auth-library"]).toBe("11.3.2");
 		// The authoring SDK must NOT be a runtime dependency (type-only).
 		expect(deps?.["@orgsdk/plugins"]).toBeUndefined();
 		expect(Object.keys(deps ?? {}).sort()).toEqual([
