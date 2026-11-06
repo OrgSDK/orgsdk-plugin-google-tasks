@@ -1,7 +1,7 @@
 {
 	"$schema": "https://orgsdk.ai/schemas/plugin-manifest.v1.json",
 	"name": "google-tasks",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Google Tasks (sensitive scope). Shares the `google-oauth` credential with google-sheets \u2014 connect once via the google-sheets plugin's 'Connect Google' button.",
 	"entry": "index.ts",
 	"auth": {
