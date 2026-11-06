@@ -15,9 +15,9 @@ describe("manifest", () => {
 		expect(m.name).toBe("google-tasks");
 	});
 
-	it("has the bumped version 1.0.3", async () => {
+	it("has the bumped version 1.0.4", async () => {
 		const m = await readManifest();
-		expect(m.version).toBe("1.0.3");
+		expect(m.version).toBe("1.0.4");
 	});
 
 	it("declares the canonical $schema", async () => {

@@ -1,80 +1,47 @@
-# Current execution contract
+# Google Tasks for OrgSDK
 
-Connect a BYO Google OAuth app granting the Tasks scope in OrgSDK. The host refreshes it and supplies only its access token. No first-party relay or plugin-owned connect flow is supported by the current host.
+## Install in OrgSDK
 
-Native OAuth providers receive only `{source: "byo", secret_accessToken}`. The host owns refresh. The first-party relay is retired.
+Open your project's Plugins page, select this plugin and enable the pinned release.
+The default catalogue is https://orgsdk.ai/plugins/releases.json. The executor
+downloads the versioned bundle and verifies its SHA256. Configure the provider
+and attach the credential described below before running an action.
 
-## Historical source reference
-
-The following describes the former author-source host; current npm and native credential behaviour above takes precedence.
-
-# Google Tasks
-
-Read and manage Google Tasks — task lists and tasks. Shares the
-**`google-oauth`** credential with `google-sheets`; connect once via the
-google-sheets plugin's "Connect Google" button and both work.
-
-## What it does
-
-The `google-tasks` plugin exposes task-list CRUD: create task lists, add/complete/update
-tasks, and clear completed items. It's the lightweight to-do surface for
-Google Workspace — useful for turning workflow output into actionable items
-without standing up a heavier tracker.
-
-Typical uses:
-
-- **Action capture** — when an agent identifies a follow-up, create a task in a
-  named list.
-- **Sync** — mirror issues/tickets into Google Tasks for human tracking.
-- **Standup prep** — list open tasks for a person before a scheduled review.
-
-## Functions
-
-| Function | Purpose |
-|---|---|
-| `listTaskLists` | List all task lists. |
-| `createTaskList` / `deleteTaskList` | Create / delete a task list. |
-| `listTasks` | List tasks in a list. |
-| `createTask` / `getTask` / `updateTask` / `deleteTask` | Task CRUD. |
-| `completeTask` / `uncompleteTask` | Mark a task done / reopen it. |
-| `clearCompletedTasks` | Remove all completed tasks from a list. |
-
-The full function list (parameters, return types) is available via the
-`plugins:info` command in the dashboard.
+The plugin is Apache-2.0 licensed; see LICENSE, NOTICE and TRADEMARKS.md.
+The generated npm distribution is a separate publication surface. Installing npm
+files alone does not register a project plugin. Local builds do not publish it.
 
 ## Credentials
 
-Every function declares `requiredCredentials: ["google-oauth"]`. This plugin
-**does not own** an auth provider — it reuses the credential established by the
-`google-sheets` plugin.
+Connect your own Google OAuth application in OrgSDK with `https://www.googleapis.com/auth/tasks`.
+Enable the corresponding Google API and register the exact callback URL shown
+by OrgSDK in your Google Cloud OAuth client. Attach the resulting `google-oauth`
+credential to this project plugin. The host owns consent and token refresh;
+execution receives only `{source: "byo", secret_accessToken}`. Client and refresh
+secrets stay on the host. No hosted OAuth relay is supported.
 
-| Provider | Type | Connect method |
-|---|---|---|
-| `google-oauth` | oauth2 | Connect via the **google-sheets** plugin: one-click "Connect Google" when the relay has OrgSDK's first-party client, or paste your own OAuth client JSON (BYO). The granted scopes cover Sheets + Tasks. |
+A Google credential may be shared with another Google plugin only when its granted
+scopes cover both plugins. Provider consent, app verification and account permissions
+are required independently of installing this package.
 
-> No separate connect step for google-tasks — once `google-sheets` is
-> connected, this plugin works immediately.
+## Functions
 
-## Using it in a workflow
+- `listTaskLists` — List all Google Task lists for the authenticated user.
+- `createTaskList` — Create a new Google Task list.
+- `deleteTaskList` — Delete a Google Task list by ID.
+- `listTasks` — List tasks in a Google Task list. Options: showCompleted (default true), showHidden, dueMin/dueMax (RFC 3339), maxResults (default 100).
+- `getTask` — Get a single Google Task by ID.
+- `createTask` — Create a task in a Google Task list. Options: notes, due (RFC 3339 date string), parent (task ID for subtasks).
+- `updateTask` — Update a Google Task. Pass an updates object with any of: title, notes, due (RFC 3339), status ("needsAction" or "completed").
+- `completeTask` — Mark a Google Task as completed (sets status to "completed").
+- `uncompleteTask` — Mark a Google Task as incomplete (sets status back to "needsAction").
+- `deleteTask` — Delete a Google Task by ID.
+- `clearCompletedTasks` — Clear all completed tasks from a Google Task list.
+
+## Example action
 
 ```typescript
-// Ensure a list exists, then add a task
-const lists = await listTaskLists();
-let inbox = lists.find((l) => l.title === "Agent Inbox");
-if (!inbox) inbox = await createTaskList({ title: "Agent Inbox" });
-
-await createTask({
-  taskListId: inbox.id,
-  title: "Follow up with Acme on renewal",
-  notes: "Flagged by the triage workflow on 2026-07-09",
-});
-
-// Tick off completed work
-await clearCompletedTasks({ taskListId: inbox.id });
+return await googleTasks.listTaskLists({});
 ```
 
-## Notes
-
-- This plugin intentionally has **no authProvider** — it shares
-  `google-oauth` with `google-sheets` to avoid a second OAuth round-trip.
-- See `guides/usage-patterns.md` for agent-facing composition patterns.
+Use named argument objects. Exact parameters and return types are in the release catalogue and the project tool contract.

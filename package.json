@@ -1,6 +1,6 @@
 {
 	"name": "@orgsdk/plugin-google-tasks",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Google Tasks operations: task lists and tasks (shares google-oauth with google-sheets)",
 	"type": "module",
 	"private": true,
